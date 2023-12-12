@@ -1,0 +1,30 @@
+@media only screen and (max-width: 768px) {
+  .selected-post-header {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    background-color: black;
+    width: 100%;
+  }
+
+  .selected-post-header div {
+    margin-right: 10px;
+  }
+
+  .selected-post-header h2 {
+    margin: 10px;
+  }
+  .post-view-container {
+    margin-top: 50px;
+    margin-bottom: 0px;
+  }
+  .header-div {
+    display: none;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .selected-post-header {
+    display: none;
+  }
+}

@@ -1,0 +1,34 @@
+@media only screen and (max-width: 768px) {
+  .bookMark-header {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    z-index: 99;
+    background-color: black;
+    width: 100%;
+  }
+
+  .bookMark-header div {
+    margin-right: 10px;
+  }
+
+  .bookMark-header h2 {
+    margin: 10px;
+  }
+  .parent-container-bookmark {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+  }
+  .header-div {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .bookMark-header {
+    display: none;
+  }
+}

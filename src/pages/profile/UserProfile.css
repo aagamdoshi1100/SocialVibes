@@ -1,0 +1,157 @@
+@media only screen and (max-width: 768px) {
+  .profile-arrow {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: black;
+    width: 100%;
+    z-index: 20;
+  }
+  .container {
+    margin-top: 50px;
+  }
+  .profile-header {
+    display: flex;
+    align-items: center;
+  }
+  .followers,
+  .following {
+    margin: 10px;
+  }
+  .profile-header-icon-username {
+    margin-left: 12px;
+    font-size: 20px;
+  }
+  .selectAvtar {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    border: 1px solid grey;
+  }
+  .profile-circle {
+    border-radius: 50%;
+    height: 20%;
+    width: 30%;
+    border: 2px solid blueviolet;
+    overflow: hidden;
+    margin: 10px;
+  }
+  .profile-circle img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  .bio-portfolio {
+    margin: 5px;
+    font-size: 16px;
+  }
+  .url-link {
+    color: white;
+    text-decoration: none;
+  }
+
+  .url-link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .Btn-div {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    padding: 10px;
+  }
+  .Btn,
+  .edit-profile-btn {
+    color: white;
+    background-color: blueviolet;
+    padding: 10px 40px;
+    border-radius: 5px;
+    font-size: 15px;
+  }
+  .edit-profile-div {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    z-index: 20;
+    padding: 10px;
+    background-color: black;
+  }
+  .edit-profile-div > * {
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+  .avtars > * {
+    margin: 10px;
+  }
+  .edit-profile-inputs {
+    box-sizing: border-box;
+    width: 100%;
+  }
+  .edit-profile-btn {
+    margin-right: 5px;
+  }
+  .header-div {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .profile-arrow {
+    display: none;
+  }
+  .edit-profile-div {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    padding: 10px;
+    background-color: black;
+  }
+  .profile-header {
+    display: flex;
+    align-items: center;
+  }
+  .profile-circle {
+    border-radius: 50%;
+
+    border: 2px solid blueviolet;
+    overflow: hidden;
+    margin: 10px;
+  }
+  .profile-circle img {
+    height: 100px;
+  }
+  .followers,
+  .following {
+    margin: 10px;
+  }
+  .profile-header-icon-username {
+    margin-left: 12px;
+    font-size: 20px;
+  }
+  .Btn-div {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    padding: 10px;
+  }
+  .Btn,
+  .edit-profile-btn {
+    color: white;
+    background-color: blueviolet;
+    padding: 10px 40px;
+    border-radius: 5px;
+    font-size: 15px;
+  }
+  .bio-portfolio {
+    margin: 5px;
+    font-size: 16px;
+  }
+}

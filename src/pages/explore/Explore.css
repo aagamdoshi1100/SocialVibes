@@ -1,0 +1,28 @@
+@media only screen and (max-width: 768px) {
+  .explore-header {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    z-index: 99;
+    background-color: black;
+    width: 100%;
+  }
+
+  .explore-header div {
+    margin-right: 10px;
+  }
+
+  .explore-header h2 {
+    margin: 10px;
+  }
+  .header-div {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .explore-header {
+    display: none;
+  }
+}

@@ -1,0 +1,52 @@
+.parent-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh; /* Adjust the height of the parent container as needed */
+      }
+      
+    .login-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 50px auto ;
+    }
+    .logo{
+        display: flex;
+        justify-content: center;
+        font-size: 60px;
+    }
+    .brand-name{
+        margin: 5px auto;
+    }
+    .login-container input{
+        padding: 6px;
+        margin: 5px;
+        font-size: 16px;
+    }
+    .login-container button{
+        padding: 6px;
+        margin: 15px;
+        width: 95%;
+        font-size: 16px;
+    }
+    .login-container p {
+        color: red;
+        font-size: 16px;
+        position: absolute;
+        bottom: 20px; /* Adjust the margin as needed */
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    .login-container h5{
+        color: red;
+        font-size: 16px;
+    }
+    .url{
+        color: aliceblue;
+        font-size: 16px;
+    }
+    .url:hover{
+        color: blueviolet;
+        font-size: 16px;
+    }

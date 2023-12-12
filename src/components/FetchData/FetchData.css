@@ -1,0 +1,114 @@
+@media only screen and (max-width: 768px) {
+  /* Three dots */
+  .post-edit-btn {
+    position: relative;
+  }
+  .heading-menu-item {
+    list-style-type: none;
+    position: absolute;
+    left: 100%;
+    padding: 10px;
+    transform: translate(-130px, -35px);
+    background-color: black;
+    border: 1px solid rgb(44, 43, 43);
+  }
+
+  /* comment box */
+  .comment-box,
+  .post-editBox {
+    position: fixed;
+    background-color: black;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+  }
+  .comment-box > * {
+    padding: 10px;
+  }
+
+  /* header */
+  .user-identity {
+    display: flex;
+  }
+  .fullName {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 10px;
+    cursor: pointer;
+  }
+  /* post-footer */
+  .post-footer {
+    display: flex;
+    justify-content: space-around;
+  }
+  /* comment - bookmark - like */
+  .footer-icon {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    font-size: 26px;
+  }
+  .footer-icon span {
+    padding-left: 5px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .FeedBox {
+    padding: 5px;
+    cursor: pointer;
+  }
+  .fetchdata-image {
+    width: 300px;
+    height: 300px;
+    margin: 10px 0px;
+  }
+  .fetchdata-image img {
+    border-radius: 15px;
+    object-fit: cover;
+  }
+  .post-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .user-identity {
+    display: flex;
+  }
+  .fullName {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 10px;
+    cursor: pointer;
+  }
+  .post-footer {
+    display: flex;
+    justify-content: space-around;
+  }
+  .comment-box,
+  .post-editBox {
+    position: fixed;
+    background-color: black;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+    width: 80%;
+  }
+  /* comment - bookmark - like */
+  .footer-icon {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    font-size: 26px;
+  }
+  .footer-icon span {
+    padding-left: 5px;
+  }
+  .filter-icon {
+    display: none;
+  }
+}
