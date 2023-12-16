@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../constants";
 
 const AuthContext = createContext();
 
@@ -18,20 +19,22 @@ export const AuthContextProvider = ({ children }) => {
     newUser: null,
     isValid: false,
     errors: {
-      errorEmail: "",
+      email: "",
+      password: "",
+      username: "",
       firstname: "",
       lastname: "",
-      username: "",
-      password: "",
-      confirm_passowrd: "",
+      message: "",
     },
   });
   const navigate = useNavigate();
-
   const signUphandler = async () => {
     try {
-      const response = await fetch(`/api/auth/signup`, {
+      const response = await fetch(`${API_URL}/signup`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           email: user.auth.email,
           password: user.auth.password,
@@ -41,39 +44,56 @@ export const AuthContextProvider = ({ children }) => {
           profileIcon: "https://shorturl.at/tyEJ9",
         }),
       });
-      if (response.status === 422) {
-      } else if (response.status === 201) {
-        const { encodedToken, createdUser } = await response.json();
-        localStorage.setItem("encodedToken", encodedToken);
-        localStorage.setItem("Username", createdUser.username);
-        localStorage.setItem("Followings", createdUser.username);
+      const responseData = await response.json();
+      if (response.status === 201) {
+        const { token, createdUser } = responseData.data;
+        localStorage.setItem("encodedToken", token);
+        localStorage.setItem("Username", createdUser);
+        localStorage.setItem("Followings", createdUser);
         setUser({
           ...user,
+          auth: {
+            email: "",
+            password: "",
+            username: "",
+            firstname: "",
+            lastname: "",
+          },
           name: createdUser.username,
           isLoggedIn: true,
-          errorMessage: "",
           isNewUser: true,
           newUser: createdUser,
         });
         navigate("/pages/Avtar/Avtar");
+      } else if (response.status === 409) {
+        setUser({
+          ...user,
+          errors: {
+            ...user.errors,
+            message: responseData.message,
+          },
+        });
       }
     } catch (e) {
-      console.log("🚀 ~ file: AuthContext.js:20 ~ signUphandler ~ e:", e);
+      console.error({ e: e.message });
     }
   };
   const loginHandler = async () => {
     try {
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           username: user.auth.username,
           password: user.auth.password,
         }),
       });
-      if (response.status === 404) {
-      } else if (response.status === 200) {
-        const { encodedToken } = await response.json();
-        localStorage.setItem("encodedToken", encodedToken);
+      if (response.status === 200) {
+        const responseData = await response.json();
+        const { token } = responseData;
+        localStorage.setItem("encodedToken", token);
         localStorage.setItem("Username", user.auth.username);
         localStorage.setItem("Followings", user.auth.username);
         setUser({
@@ -83,6 +103,22 @@ export const AuthContextProvider = ({ children }) => {
           errorMessage: "",
         });
         navigate("/pages/UserFeed/UserFeed");
+      } else if (response.status === 404) {
+        setUser({
+          ...user,
+          errors: {
+            ...user.errors,
+            message: `User not exist. Please signup`,
+          },
+        });
+      } else if (response.status === 401) {
+        setUser({
+          ...user,
+          errors: {
+            ...user.errors,
+            message: "Invalid credentials",
+          },
+        });
       }
     } catch (e) {
       console.log("🚀 ~ file: AuthContext.js:13 ~ loginHandler ~ e:", e);
@@ -90,20 +126,19 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const validate = (val, type) => {
-    console.log(val, "val");
     switch (type) {
-      case "Email":
+      case "email":
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(val)
           ? setUser({
               ...user,
-              errors: { ...user.errors, errorEmail: "" },
+              errors: { ...user.errors, email: "" },
               auth: { ...user.auth, email: val },
             })
           : setUser({
               ...user,
               errors: {
                 ...user.errors,
-                errorEmail: "Please enter valid email id",
+                email: "Please enter valid email id",
               },
             });
         break;
@@ -156,7 +191,7 @@ export const AuthContextProvider = ({ children }) => {
         break;
       case "call":
         if (
-          user.errors.errorEmail === "" &&
+          user.errors.email === "" &&
           user.errors.firstname === "" &&
           user.errors.lastname === "" &&
           user.errors.username === "" &&
@@ -166,12 +201,8 @@ export const AuthContextProvider = ({ children }) => {
         }
         break;
       case "signInCall":
-        console.log("1");
         if (user.errors.username === "" && user.errors.password === "") {
-          console.log("2");
           loginHandler();
-        } else {
-          console.log("3");
         }
         break;
       default:
