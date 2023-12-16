@@ -21,41 +21,41 @@ function App() {
         <Route
           path="/pages/UserFeed/UserFeed"
           element={
-            <RequiresAuth>
-              <UserFeed />
-            </RequiresAuth>
+            // <RequiresAuth>
+            <UserFeed />
+            // </RequiresAuth>
           }
         />
         <Route
           path="/pages/SinglePostView/"
           element={
-            <RequiresAuth>
-              <SinglePostView />
-            </RequiresAuth>
+            // <RequiresAuth>
+            <SinglePostView />
+            // </RequiresAuth>
           }
         />
         <Route
           path="/pages/profile/UserProfile"
           element={
-            <RequiresAuth>
-              <UserProfile />
-            </RequiresAuth>
+            // <RequiresAuth>
+            <UserProfile />
+            // </RequiresAuth>
           }
         />
         <Route
           path="/pages/explore/Explore"
           element={
-            <RequiresAuth>
-              <Explore />
-            </RequiresAuth>
+            // <RequiresAuth>
+            <Explore />
+            // </RequiresAuth>
           }
         />
         <Route
           path="/pages/bookmark/BookMark"
           element={
-            <RequiresAuth>
-              <BookMark />
-            </RequiresAuth>
+            // <RequiresAuth>
+            <BookMark />
+            // </RequiresAuth>
           }
         />
       </Routes>
