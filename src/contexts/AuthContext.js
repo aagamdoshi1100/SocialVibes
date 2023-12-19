@@ -47,9 +47,10 @@ export const AuthContextProvider = ({ children }) => {
       const responseData = await response.json();
       if (response.status === 201) {
         const { token, createdUser } = responseData.data;
-        localStorage.setItem("encodedToken", token);
-        localStorage.setItem("Username", createdUser);
-        localStorage.setItem("Followings", createdUser);
+        localStorage.setItem("token", token);
+        localStorage.setItem("username", createdUser.username);
+        localStorage.setItem("userId", createdUser._id);
+        localStorage.setItem("followings", createdUser.username);
         setUser({
           ...user,
           auth: {
@@ -92,10 +93,11 @@ export const AuthContextProvider = ({ children }) => {
       });
       if (response.status === 200) {
         const responseData = await response.json();
-        const { token } = responseData;
-        localStorage.setItem("encodedToken", token);
-        localStorage.setItem("Username", user.auth.username);
-        localStorage.setItem("Followings", user.auth.username);
+        const { loggedInUser, token } = responseData;
+        localStorage.setItem("token", token);
+        localStorage.setItem("username", loggedInUser.username);
+        localStorage.setItem("userId", loggedInUser._id);
+        localStorage.setItem("followings", loggedInUser.username);
         setUser({
           ...user,
           name: user.auth.username,
@@ -211,9 +213,10 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const logOutHandler = () => {
-    localStorage.removeItem("encodedToken");
-    localStorage.removeItem("Username");
-    localStorage.removeItem("Followings");
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("followings");
     setUser({
       ...user,
       name: "",
