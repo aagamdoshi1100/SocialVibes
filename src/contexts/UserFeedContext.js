@@ -3,6 +3,7 @@ import UserFeedReducer, {
   InitialValueFeedContext,
 } from "../reducer/UserFeedReducer";
 import useAuthContext from "./AuthContext";
+import { API_URL } from "../constants";
 
 const UserFeedContext = createContext();
 
@@ -12,7 +13,9 @@ export const UserFeedContextProvider = ({ children }) => {
     InitialValueFeedContext
   );
   const { navigate } = useAuthContext();
-  const token = localStorage.getItem("encodedToken");
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const username = localStorage.getItem("username");
 
   const postBookMarkHandler = async (postId) => {
     try {
@@ -164,31 +167,29 @@ export const UserFeedContextProvider = ({ children }) => {
   };
   const createPost = async () => {
     const post = {
-      content: userFeed.createPostContent,
-      image:
-        userFeed.createPostImage === null ||
-        userFeed.createPostImage === undefined
-          ? ""
-          : URL.createObjectURL(userFeed.createPostImage),
+      content: userFeed.createPost.createPostContent,
+      image: userFeed.createPost.createPostImage,
+      user: userId,
+      likes: 0,
+      dislike: 0,
+      comment: [],
     };
-    console.log(post, "post");
     try {
-      const response = await fetch("/api/posts", {
+      userFeedDispacher({
+        type: "UPLOAD_POST",
+      });
+      const response = await fetch(`${API_URL}/posts/${userId}/post`, {
         method: "POST",
-        headers: { authorization: token },
-        body: JSON.stringify({ postData: post }),
+        headers: { "Content-Type": "application/json", authorization: token },
+        body: JSON.stringify(post),
       });
       const responseData = await response.json();
-      console.log(
-        "🚀 ~ file: UserFeedContext.js:123 ~ createPost ~ responseData:",
-        responseData
-      );
       userFeedDispacher({
-        type: "ALL_POSTS",
-        payload: { data: responseData.posts, value: userFeed.fetchValue },
+        type: "CREATE_POST",
+        payload: { data: responseData.data, value: userFeed.fetchValue },
       });
     } catch (e) {
-      console.log("🚀 ~ file: UserFeedContext.js:17 ~ createPost ~ e:", e);
+      console.error("file: UserFeedContext.js:17 ~ createPost ~ e:", e);
     }
   };
 
@@ -200,9 +201,7 @@ export const UserFeedContextProvider = ({ children }) => {
         type: "ALL_POSTS",
         payload: { data: responseData.posts, value: "followedUserPosts" },
       });
-    } catch (e) {
-      console.log("🚀 ~ file: UserFeedContext.js:12 ~ fetchAllPosts ~ e:", e);
-    }
+    } catch (e) {}
   };
   useEffect(() => {
     fetchAllPosts();
