@@ -28,6 +28,7 @@ export const AuthContextProvider = ({ children }) => {
     },
   });
   const navigate = useNavigate();
+  console.log(user, "31");
   const signUphandler = async () => {
     try {
       const response = await fetch(`${API_URL}/signup`, {
@@ -39,8 +40,8 @@ export const AuthContextProvider = ({ children }) => {
           email: user.auth.email,
           password: user.auth.password,
           username: user.auth.username,
-          firstName: user.auth.firstname,
-          lastName: user.auth.lastname,
+          firstname: user.auth.firstname,
+          lastname: user.auth.lastname,
           profileIcon: "https://shorturl.at/tyEJ9",
         }),
       });
@@ -147,19 +148,11 @@ export const AuthContextProvider = ({ children }) => {
       case "username":
       case "lastname":
       case "firstname":
-        val.length > 2
-          ? setUser({
-              ...user,
-              errors: { ...user.errors, [type]: "" },
-              auth: { ...user.auth, [type]: val },
-            })
-          : setUser({
-              ...user,
-              errors: {
-                ...user.errors,
-                [type]: "Minimum 3 characters required",
-              },
-            });
+        console.log(type, val, "150");
+        setUser({
+          ...user,
+          auth: { ...user.auth, [type]: val },
+        });
         break;
       case "password":
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!])(?!.*\s).{8,}$/.test(val)
