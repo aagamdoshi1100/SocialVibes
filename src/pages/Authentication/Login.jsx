@@ -23,13 +23,24 @@ export default function Login() {
         <input
           type="text"
           placeholder="Username"
-          onChange={(e) => validate(e.target.value, "username")}
+          onChange={(e) =>
+            setUser({
+              ...user,
+              auth: { ...user.auth, username: e.target.value },
+            })
+          }
         />
         {user.errors.username}
         <input
           type="password"
           placeholder="Password"
-          onChange={(e) => validate(e.target.value, "password")}
+          onChange={(e) =>
+            setUser({
+              ...user,
+              errors: { ...user.errors, password: "" },
+              auth: { ...user.auth, password: e.target.value },
+            })
+          }
         />
         {user.errors.password}
         <button onClick={() => validate("", "signInCall")}>Login</button>
