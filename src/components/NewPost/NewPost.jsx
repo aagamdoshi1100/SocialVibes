@@ -4,8 +4,9 @@ import Loader from "react-js-loader";
 import "./NewPost.css";
 
 export default function NewPost() {
-  const { userFeed, userFeedDispacher, createPost } = useUserFeedContext();
-  const { BiImageAdd } = useIconContext();
+  const { userFeed, userFeedDispacher, createPost, editPost } =
+    useUserFeedContext();
+  const { BiImageAdd, MdOutlineClose } = useIconContext();
   const hide = {
     display: "none",
     visibility: "none",
@@ -60,11 +61,17 @@ export default function NewPost() {
                 />
               </>
             ) : (
-              <img
-                src={userFeed.createPost.createPostImage}
-                width="100%"
-                className="uploaded-img"
-              />
+              <>
+                <MdOutlineClose
+                  size="2em"
+                  onClick={() => userFeedDispacher({ type: "CLEAR_IMAGE" })}
+                />
+                <img
+                  src={userFeed.createPost.createPostImage}
+                  width="100%"
+                  className="uploaded-img"
+                />
+              </>
             )}
           </div>
           <textarea
@@ -90,9 +97,15 @@ export default function NewPost() {
             >
               Discard
             </button>
-            <button className="post" onClick={createPost}>
-              Post
-            </button>
+            {userFeed.editPost ? (
+              <button className="post" onClick={editPost}>
+                Update
+              </button>
+            ) : (
+              <button className="post" onClick={createPost}>
+                Post
+              </button>
+            )}
           </div>
         </div>
       )}

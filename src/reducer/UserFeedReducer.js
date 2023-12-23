@@ -8,6 +8,7 @@ export const InitialValueFeedContext = {
   },
   postMenu: false,
   postId: "",
+  editPost: false,
 
   showFiltersUserFeed: false,
   filterBy: "",
@@ -71,6 +72,8 @@ export default function UserFeedReducer(state, action) {
           createPostContent: "",
           createPostImage: "",
         },
+        postId: "",
+        editPost: false,
       };
     case "ALL_POSTS":
       return {
@@ -105,6 +108,53 @@ export default function UserFeedReducer(state, action) {
         postMenu: action.payload !== state.postId ? true : !state.postMenu,
         postId: action.payload,
       };
+    case "ENABLE_POST_EDIT":
+      const getPostForEditing = state.allPosts.find(
+        (post) => post._id === action.payload
+      );
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          enabled: true,
+          createPostContent: getPostForEditing.content,
+          createPostImage: getPostForEditing.image,
+        },
+        postMenu: false,
+        postId: action.payload,
+        editPost: true,
+      };
+    case "EDIT_POST_HANDLER":
+      console.log(action.payload, "pay");
+      return {
+        ...state,
+        allPosts: state.allPosts.map((post) => {
+          if (action.payload.postId === post._id) {
+            console.log(Object.assign(post, action.payload.data), "q");
+            return Object.assign(post, action.payload.data);
+          } else {
+            return post;
+          }
+        }),
+        editPost: false,
+        postId: "",
+        createPost: {
+          ...state.createPost,
+          loading: false,
+          enabled: false,
+          createPostContent: "",
+          createPostImage: "",
+        },
+      };
+    case "CLEAR_IMAGE":
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          createPostImage: "",
+        },
+      };
+
     case "BOOKMARK_PAGE":
     case "HOME_PAGE":
     case "EXPLORE_PAGE":

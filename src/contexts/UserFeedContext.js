@@ -24,6 +24,13 @@ export const UserFeedContextProvider = ({ children }) => {
     });
   };
 
+  const enableEdit = (postId) => {
+    userFeedDispacher({
+      type: "ENABLE_POST_EDIT",
+      payload: postId,
+    });
+  };
+
   const postBookMarkHandler = async (postId) => {
     try {
       const response = await fetch(`/api/users/bookmark/${postId}`, {
@@ -104,40 +111,27 @@ export const UserFeedContextProvider = ({ children }) => {
       console.log("🚀 ~ file: UserFeedContext.js:32 ~ editHandler ~ e:", e);
     }
   };
-  const editHandler = async (postId) => {
+  const editPost = async () => {
     const post = {
-      content:
-        userFeed.createPostContent === null ||
-        userFeed.createPostContent === undefined
-          ? userFeed?.followedUserPosts?.find((obj) => obj._id === postId)
-              .content
-          : userFeed.createPostContent,
-      image:
-        userFeed.createPostImage === null ||
-        userFeed.createPostImage === undefined
-          ? userFeed?.followedUserPosts?.find((obj) => obj._id === postId).image
-          : URL.createObjectURL(userFeed.createPostImage),
+      content: userFeed.createPost.createPostContent,
+      image: userFeed.createPost.createPostImage,
     };
     try {
-      const response = await fetch(`/api/posts/edit/${postId}`, {
+      const response = await fetch(`${API_URL}/posts/edit/${userFeed.postId}`, {
         method: "POST",
-        headers: { authorization: token },
-        body: JSON.stringify({ postData: post }),
+        headers: { "Content-Type": "application/json", authorization: token },
+        body: JSON.stringify({ post }),
       });
-      console.log(response, "response");
       const responseData = await response.json();
-      console.log(responseData, "res");
       userFeedDispacher({
         type: "EDIT_POST_HANDLER",
         payload: {
-          data: responseData.posts,
-          postId,
-          showEditUserFeed: userFeed.showEditUserFeed,
-          value: userFeed.fetchValue,
+          data: responseData.editedPost,
+          postId: userFeed.postId,
         },
       });
     } catch (e) {
-      console.log("🚀 ~ file: UserFeedContext.js:32 ~ editHandler ~ e:", e);
+      console.error("🚀 ~ file: UserFeedContext.js:32 ~ editHandler ~ e:", e);
     }
   };
 
@@ -209,13 +203,14 @@ export const UserFeedContextProvider = ({ children }) => {
         userFeedDispacher,
         createPost,
         postLikeHandler,
-        editHandler,
         deletePostHandler,
         getSelectedPost,
         navigate,
         postBookMarkHandler,
         fetchAllPosts,
         enablePostMenu,
+        enableEdit,
+        editPost,
       }}
     >
       {children}
