@@ -134,37 +134,25 @@ export const UserFeedContextProvider = ({ children }) => {
     }
   };
 
-  const postLikeHandler = async (postId) => {
+  const postLikeHandler = async (postId, likedBy) => {
     try {
-      const response = await fetch(`/api/posts/like/${postId}`, {
+      const response = await fetch(`${API_URL}/posts/${postId}/likeHandler`, {
         method: "POST",
-        headers: { authorization: token },
+        headers: { "Content-Type": "applications/json", authorization: token },
+        body: JSON.stringify({ likedBy }),
       });
       const responseData = await response.json();
       if (response.status === 201) {
         userFeedDispacher({
-          type: "LIKE_STATUS",
-          payload: { data: responseData.posts, postId: postId },
+          type: "LIKE_HANDLER",
+          payload: { postId, likedBy },
         });
-      } else {
-        try {
-          const responsedislike = await fetch(`/api/posts/dislike/${postId}`, {
-            method: "POST",
-            headers: { authorization: token },
-          });
-          const responseDisData = await responsedislike.json();
-          userFeedDispacher({
-            type: "LIKE_STATUS",
-            payload: { data: responseDisData.posts },
-          });
-        } catch (e) {
-          console.log("400 erro code", e);
-        }
       }
     } catch (e) {
-      console.log("🚀 ~ file: UserFeedContext.js:20 ~ likePost ~ e:", e);
+      console.error("🚀 ~ file: UserFeedContext.js:20 ~ likePost ~ e:", e);
     }
   };
+
   const createPost = async () => {
     const post = {
       content: userFeed.createPost.createPostContent,
@@ -172,6 +160,7 @@ export const UserFeedContextProvider = ({ children }) => {
       user: userId,
       likes: 0,
       dislike: 0,
+      likedBy: [],
       comment: [],
     };
     try {
@@ -195,17 +184,17 @@ export const UserFeedContextProvider = ({ children }) => {
 
   const fetchAllPosts = async () => {
     try {
-      const response = await fetch("/api/posts");
-      const responseData = await response.json();
+      const fetchPosts = await fetch(`${API_URL}/posts`);
+      const posts = await fetchPosts.json();
       userFeedDispacher({
         type: "ALL_POSTS",
-        payload: { data: responseData.posts, value: "followedUserPosts" },
+        payload: posts.posts,
       });
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
   };
-  useEffect(() => {
-    fetchAllPosts();
-  }, []);
+
   return (
     <UserFeedContext.Provider
       value={{
@@ -218,6 +207,7 @@ export const UserFeedContextProvider = ({ children }) => {
         getSelectedPost,
         navigate,
         postBookMarkHandler,
+        fetchAllPosts,
       }}
     >
       {children}
