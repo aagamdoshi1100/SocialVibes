@@ -69,6 +69,33 @@ export default function UserFeedReducer(state, action) {
           createPostImage: "",
         },
       };
+    case "ALL_POSTS":
+      return {
+        ...state,
+        allPosts: action.payload,
+      };
+    case "LIKE_HANDLER":
+      return {
+        ...state,
+        allPosts: state.allPosts.map((post) => {
+          if (post._id === action.payload.postId) {
+            if (post.likedBy.includes(action.payload.likedBy)) {
+              return {
+                ...post,
+                likedBy: post.likedBy.filter(
+                  (user) => user !== action.payload.likedBy
+                ),
+              };
+            } else {
+              return {
+                ...post,
+                likedBy: [...post.likedBy, action.payload.likedBy],
+              };
+            }
+          }
+          return post;
+        }),
+      };
     case "BOOKMARK_PAGE":
     case "HOME_PAGE":
     case "EXPLORE_PAGE":
