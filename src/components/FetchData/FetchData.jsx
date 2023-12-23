@@ -11,6 +11,7 @@ export default function FetchData() {
     postLikeHandler,
     enablePostMenu,
     enableEdit,
+    deletePost,
   } = useUserFeedContext();
   const {
     AiOutlineLike,
@@ -47,7 +48,7 @@ export default function FetchData() {
                 {userFeed.postMenu && userFeed.postId === post._id && (
                   <div className="postMenu b">
                     <p onClick={() => enableEdit(post._id)}>Edit</p>
-                    <p>Delete</p>
+                    <p onClick={() => deletePost(post._id)}>Delete</p>
                   </div>
                 )}
               </div>

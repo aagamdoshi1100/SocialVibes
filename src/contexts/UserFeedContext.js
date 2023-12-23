@@ -92,25 +92,22 @@ export const UserFeedContextProvider = ({ children }) => {
     }
   };
 
-  const deletePostHandler = async (postId) => {
+  const deletePost = async (postId) => {
     try {
-      const response = await fetch(`/api/posts/${postId}`, {
+      const response = await fetch(`${API_URL}/posts/${postId}`, {
         method: "DELETE",
         headers: { authorization: token },
       });
       const responseData = await response.json();
       userFeedDispacher({
-        type: "ALL_POSTS",
-        payload: {
-          data: responseData.posts,
-          value: userFeed.fetchValue,
-          postId,
-        },
+        type: "DELETE_POST",
+        payload: postId,
       });
     } catch (e) {
-      console.log("🚀 ~ file: UserFeedContext.js:32 ~ editHandler ~ e:", e);
+      console.error(" file: UserFeedContext.js:32 ~ editHandler ~ e:", e);
     }
   };
+
   const editPost = async () => {
     const post = {
       content: userFeed.createPost.createPostContent,
@@ -203,7 +200,6 @@ export const UserFeedContextProvider = ({ children }) => {
         userFeedDispacher,
         createPost,
         postLikeHandler,
-        deletePostHandler,
         getSelectedPost,
         navigate,
         postBookMarkHandler,
@@ -211,6 +207,7 @@ export const UserFeedContextProvider = ({ children }) => {
         enablePostMenu,
         enableEdit,
         editPost,
+        deletePost,
       }}
     >
       {children}

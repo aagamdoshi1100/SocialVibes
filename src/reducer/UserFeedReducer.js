@@ -125,12 +125,10 @@ export default function UserFeedReducer(state, action) {
         editPost: true,
       };
     case "EDIT_POST_HANDLER":
-      console.log(action.payload, "pay");
       return {
         ...state,
         allPosts: state.allPosts.map((post) => {
           if (action.payload.postId === post._id) {
-            console.log(Object.assign(post, action.payload.data), "q");
             return Object.assign(post, action.payload.data);
           } else {
             return post;
@@ -153,6 +151,11 @@ export default function UserFeedReducer(state, action) {
           ...state.createPost,
           createPostImage: "",
         },
+      };
+    case "DELETE_POST":
+      return {
+        ...state,
+        allPosts: state.allPosts.filter((post) => post._id !== action.payload),
       };
 
     case "BOOKMARK_PAGE":
