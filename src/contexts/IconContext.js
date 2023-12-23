@@ -18,6 +18,7 @@ import { FaFilter } from "react-icons/fa";
 import { SlUserFollow } from "react-icons/sl";
 import { GiInfinity } from "react-icons/gi";
 import { FaRegPlusSquare } from "react-icons/fa";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const IconContext = createContext();
 
@@ -60,6 +61,7 @@ export default function IconContextProvider({ children }) {
         GiInfinity,
         FaRegPlusSquare,
         BiImageAdd,
+        BsThreeDotsVertical,
       }}
     >
       {children}

@@ -5,8 +5,10 @@ import useUserFeedContext from "../../contexts/UserFeedContext";
 import { useIconContext } from "../../contexts/IconContext";
 
 export default function FetchData() {
-  const { fetchAllPosts, userFeed, postLikeHandler } = useUserFeedContext();
-  const { AiOutlineLike, FiBookmark, GoComment } = useIconContext();
+  const { fetchAllPosts, userFeed, postLikeHandler, enablePostMenu } =
+    useUserFeedContext();
+  const { AiOutlineLike, FiBookmark, GoComment, BsThreeDotsVertical } =
+    useIconContext();
   const loggedInUser = localStorage.getItem("username");
 
   useEffect(() => {
@@ -19,11 +21,25 @@ export default function FetchData() {
           <div key={post._id} className="post b br">
             <div className="post-header b">
               <div className="header-row">
-                <div className="user-icon b br"></div>
-                <div>
-                  <p>{`${post.user.firstname} ${post.user.lastname}`}</p>
-                  <p className="username">@{post.user.username}</p>
+                <div className="icon-username">
+                  <div className="user-icon b br"></div>
+                  <div>
+                    <p>{`${post.user.firstname} ${post.user.lastname}`}</p>
+                    <p className="username">@{post.user.username}</p>
+                  </div>
                 </div>
+                <div>
+                  <BsThreeDotsVertical
+                    size="2em"
+                    onClick={() => enablePostMenu(post._id)}
+                  />
+                </div>
+                {userFeed.postMenu && userFeed.postId === post._id && (
+                  <div className="postMenu b">
+                    <p>Edit</p>
+                    <p>Delete</p>
+                  </div>
+                )}
               </div>
 
               <div className="content">

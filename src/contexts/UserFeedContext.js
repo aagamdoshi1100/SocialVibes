@@ -15,7 +15,14 @@ export const UserFeedContextProvider = ({ children }) => {
   const { navigate } = useAuthContext();
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
-  const username = localStorage.getItem("username");
+  // const username = localStorage.getItem("username");
+
+  const enablePostMenu = (postId) => {
+    userFeedDispacher({
+      type: "ENABLE_POST_MENU",
+      payload: postId,
+    });
+  };
 
   const postBookMarkHandler = async (postId) => {
     try {
@@ -208,6 +215,7 @@ export const UserFeedContextProvider = ({ children }) => {
         navigate,
         postBookMarkHandler,
         fetchAllPosts,
+        enablePostMenu,
       }}
     >
       {children}

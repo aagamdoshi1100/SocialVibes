@@ -6,6 +6,9 @@ export const InitialValueFeedContext = {
     createPostContent: "",
     createPostImage: "",
   },
+  postMenu: false,
+  postId: "",
+
   showFiltersUserFeed: false,
   filterBy: "",
   showEditUserFeed: false,
@@ -95,6 +98,12 @@ export default function UserFeedReducer(state, action) {
           }
           return post;
         }),
+      };
+    case "ENABLE_POST_MENU":
+      return {
+        ...state,
+        postMenu: action.payload !== state.postId ? true : !state.postMenu,
+        postId: action.payload,
       };
     case "BOOKMARK_PAGE":
     case "HOME_PAGE":
