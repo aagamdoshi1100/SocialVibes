@@ -19,7 +19,7 @@ function App() {
         <Route path="/pages/Authentication/SignUp" element={<SignUp />} />
         <Route path="/pages/Avtar/Avtar" element={<Avtar />} />
         <Route
-          path="/pages/UserFeed/UserFeed"
+          path="/pages/UserFeed"
           element={
             // <RequiresAuth>
             <UserFeed />
@@ -43,7 +43,7 @@ function App() {
           }
         />
         <Route
-          path="/pages/explore/Explore"
+          path="/pages/explore"
           element={
             // <RequiresAuth>
             <Explore />
@@ -51,7 +51,7 @@ function App() {
           }
         />
         <Route
-          path="/pages/bookmark/BookMark"
+          path="/pages/bookmark"
           element={
             // <RequiresAuth>
             <BookMark />
