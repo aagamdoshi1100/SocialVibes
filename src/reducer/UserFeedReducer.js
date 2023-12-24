@@ -10,7 +10,9 @@ export const InitialValueFeedContext = {
   postMenu: false,
   postId: "",
   editPost: false,
+  page: "",
 
+  fetchValue: "",
   showFiltersUserFeed: false,
   filterBy: "",
   showEditUserFeed: false,
@@ -159,15 +161,26 @@ export default function UserFeedReducer(state, action) {
         allPosts: state.allPosts.filter((post) => post._id !== action.payload),
       };
     case "BOOKMARK_POST_HANDLER":
+      console.log(
+        action.payload,
+        "pay",
+        state.allPosts.filter((post) => action.payload.includes(post._id))
+      );
       return {
         ...state,
-        bookmarks: action.payload,
+        bookmarks: state.allPosts.filter((post) =>
+          action.payload.includes(post._id)
+        ),
+      };
+    case "BOOKMARK_PAGE":
+      return {
+        ...state,
+        page: action.payload,
       };
 
-    case "BOOKMARK_PAGE":
     case "HOME_PAGE":
     case "EXPLORE_PAGE":
-      return { ...state, fetchValue: action.payload };
+      return { ...state, page: action.payload };
 
     case "SHOW_FILTERS":
       return { ...state, showFiltersUserFeed: !action.payload };

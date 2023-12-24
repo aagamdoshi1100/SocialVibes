@@ -10,7 +10,11 @@ import {
   BiDotsVertical,
   BiImageAdd,
 } from "react-icons/bi";
-import { MdOutlineExplore, MdInsertPhoto } from "react-icons/md";
+import {
+  MdOutlineExplore,
+  MdInsertPhoto,
+  MdOutlineClose,
+} from "react-icons/md";
 import { AiOutlineHome, AiOutlineLike, AiOutlineDelete } from "react-icons/ai";
 import { FiBookmark } from "react-icons/fi";
 import { GoComment } from "react-icons/go";
@@ -25,16 +29,16 @@ const IconContext = createContext();
 export default function IconContextProvider({ children }) {
   const { navigate, userFeedDispacher } = useUserFeedContext();
   const goToBookMark = () => {
-    userFeedDispacher({ type: "BOOKMARK_PAGE", payload: "bookMarkView" });
-    navigate("/pages/bookmark/BookMark");
+    userFeedDispacher({ type: "BOOKMARK_PAGE", payload: "bookmarks" });
+    navigate("/pages/bookmark");
   };
   const goToHome = () => {
-    userFeedDispacher({ type: "HOME_PAGE", payload: "followedUserPosts" });
-    navigate("/pages/UserFeed/UserFeed");
+    userFeedDispacher({ type: "HOME_PAGE", payload: "allPosts" });
+    navigate("/pages/UserFeed");
   };
   const goToExplore = () => {
-    userFeedDispacher({ type: "EXPLORE_PAGE", payload: "postsData" });
-    navigate("/pages/explore/Explore");
+    userFeedDispacher({ type: "EXPLORE_PAGE", payload: "allPosts" });
+    navigate("/pages/explore");
   };
   return (
     <IconContext.Provider
@@ -62,6 +66,7 @@ export default function IconContextProvider({ children }) {
         FaRegPlusSquare,
         BiImageAdd,
         BsThreeDotsVertical,
+        MdOutlineClose,
       }}
     >
       {children}

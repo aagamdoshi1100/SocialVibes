@@ -105,7 +105,7 @@ export const AuthContextProvider = ({ children }) => {
           isLoggedIn: true,
           errorMessage: "",
         });
-        navigate("/pages/UserFeed/UserFeed");
+        navigate("/pages/UserFeed");
       } else if (response.status === 404) {
         setUser({
           ...user,

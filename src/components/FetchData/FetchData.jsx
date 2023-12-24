@@ -26,9 +26,11 @@ export default function FetchData() {
   useEffect(() => {
     fetchAllPosts();
   }, []);
+
+  const content = userFeed.page === "" ? "allPosts" : userFeed.page;
   return (
     <div>
-      {userFeed.allPosts.map((post) => {
+      {userFeed[content]?.map((post) => {
         return (
           <div key={post._id} className="post b br">
             <div className="post-header b">
@@ -83,7 +85,7 @@ export default function FetchData() {
                 <FiBookmark
                   size="2em"
                   color={
-                    userFeed.bookmarks.includes(post._id)
+                    userFeed.bookmarks.find((data) => data._id === post._id)
                       ? "blueviolet"
                       : "white"
                   }
