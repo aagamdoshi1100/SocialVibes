@@ -12,6 +12,7 @@ export default function FetchData() {
     enablePostMenu,
     enableEdit,
     deletePost,
+    postBookMarkHandler,
   } = useUserFeedContext();
   const {
     AiOutlineLike,
@@ -67,7 +68,9 @@ export default function FetchData() {
                 <p>{post.likedBy.length}</p>
                 <AiOutlineLike
                   size="2em"
-                  color={post.likedBy.includes(loggedInUser) ? "red" : "white"}
+                  color={
+                    post.likedBy.includes(loggedInUser) ? "blueviolet" : "white"
+                  }
                   onClick={() => postLikeHandler(post._id, loggedInUser)}
                 />
                 <span>Like</span>
@@ -77,7 +80,15 @@ export default function FetchData() {
                 <span>Comment</span>
               </div>
               <div className="icons">
-                <FiBookmark size="2em" />
+                <FiBookmark
+                  size="2em"
+                  color={
+                    userFeed.bookmarks.includes(post._id)
+                      ? "blueviolet"
+                      : "white"
+                  }
+                  onClick={() => postBookMarkHandler(post._id)}
+                />
                 <span>Bookmark</span>
               </div>
             </div>

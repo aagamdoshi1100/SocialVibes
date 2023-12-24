@@ -1,5 +1,6 @@
 export const InitialValueFeedContext = {
   allPosts: [],
+  bookmarks: [],
   createPost: {
     loading: false,
     enabled: false,
@@ -156,6 +157,11 @@ export default function UserFeedReducer(state, action) {
       return {
         ...state,
         allPosts: state.allPosts.filter((post) => post._id !== action.payload),
+      };
+    case "BOOKMARK_POST_HANDLER":
+      return {
+        ...state,
+        bookmarks: action.payload,
       };
 
     case "BOOKMARK_PAGE":
